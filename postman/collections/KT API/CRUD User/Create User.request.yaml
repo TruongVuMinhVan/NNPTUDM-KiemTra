@@ -1,0 +1,28 @@
+$kind: http-request
+name: Create User
+method: POST
+url: '{{baseUrl}}/users'
+order: 1000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "username": "john",
+      "password": "123456",
+      "email": "john@test.com",
+      "fullName": "John Doe",
+      "role": "<role_id>"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 2xx", function () {
+          pm.response.to.be.success;
+      });
+      pm.test("Response is JSON", function () {
+          pm.response.to.be.json;
+      });

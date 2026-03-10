@@ -1,0 +1,28 @@
+$kind: http-request
+name: Update User
+method: PUT
+url: '{{baseUrl}}/users/:id'
+order: 5000
+pathVariables:
+  - key: id
+    value: ''
+    description: User ID
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "fullName": "John Updated"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 2xx", function () {
+          pm.response.to.be.success;
+      });
+      pm.test("Response is JSON", function () {
+          pm.response.to.be.json;
+      });

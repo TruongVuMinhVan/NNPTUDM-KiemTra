@@ -1,0 +1,18 @@
+$kind: http-request
+name: Search Users By Username
+method: GET
+url: '{{baseUrl}}/users'
+order: 3000
+queryParams:
+  - key: username
+    value: jo
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 2xx", function () {
+          pm.response.to.be.success;
+      });
+      pm.test("Response is JSON", function () {
+          pm.response.to.be.json;
+      });

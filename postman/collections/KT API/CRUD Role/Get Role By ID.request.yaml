@@ -1,0 +1,19 @@
+$kind: http-request
+name: Get Role By ID
+method: GET
+url: '{{baseUrl}}/roles/:id'
+order: 3000
+pathVariables:
+  - key: id
+    value: ''
+    description: Role ID
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 2xx", function () {
+          pm.response.to.be.success;
+      });
+      pm.test("Response is JSON", function () {
+          pm.response.to.be.json;
+      });

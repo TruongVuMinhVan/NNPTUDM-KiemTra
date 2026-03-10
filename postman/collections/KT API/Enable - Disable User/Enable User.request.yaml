@@ -1,0 +1,25 @@
+$kind: http-request
+name: Enable User
+method: POST
+url: '{{baseUrl}}/users/enable'
+order: 1000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "email": "john@test.com",
+      "username": "john"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 2xx", function () {
+          pm.response.to.be.success;
+      });
+      pm.test("Response is JSON", function () {
+          pm.response.to.be.json;
+      });

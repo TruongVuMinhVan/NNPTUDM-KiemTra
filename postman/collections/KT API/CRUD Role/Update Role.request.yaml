@@ -1,0 +1,28 @@
+$kind: http-request
+name: Update Role
+method: PUT
+url: '{{baseUrl}}/roles/:id'
+order: 4000
+pathVariables:
+  - key: id
+    value: ''
+    description: Role ID
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "description": "Super Admin"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 2xx", function () {
+          pm.response.to.be.success;
+      });
+      pm.test("Response is JSON", function () {
+          pm.response.to.be.json;
+      });

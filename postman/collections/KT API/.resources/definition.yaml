@@ -1,0 +1,6 @@
+$kind: collection
+name: KT API
+description: API collection for KT application
+variables:
+  - key: baseUrl
+    value: 'http://localhost:3000'

@@ -1,0 +1,19 @@
+$kind: http-request
+name: Get Users by Role ID
+method: GET
+url: '{{baseUrl}}/roles/:id/users'
+order: 1000
+pathVariables:
+  - key: id
+    value: ''
+    description: Role ID
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 2xx", function () {
+          pm.response.to.be.success;
+      });
+      pm.test("Response is JSON", function () {
+          pm.response.to.be.json;
+      });

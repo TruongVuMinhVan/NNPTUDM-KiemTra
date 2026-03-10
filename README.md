@@ -1,3 +1,4 @@
+# KT - Trương Vũ Minh Vân/2280603646
 # KT - CRUD User & Role API
 
 API RESTful với Express.js + MongoDB (Docker) để quản lý User và Role.
@@ -54,9 +55,22 @@ Nhấn **Connect** → chọn database **`kt_db`** → xem collections `roles` v
 
 ## Test API trên Postman
 
+### Import Postman Collection có sẵn
+
+Dự án đã có sẵn Postman collection trong thư mục `postman/`. Để import:
+
+1. Mở **Postman** → nhấn **Import**
+2. Chọn thư mục `postman/` trong dự án
+3. Postman sẽ import collection **KT API** và environment **KT Local** (`baseUrl = http://localhost:3000`)
+4. Chọn environment **KT Local** ở góc trên bên phải Postman
+
+Collection đã được chia thành **4 phần** theo yêu cầu:
+
 > Tất cả request body dùng **raw → JSON**
 
-### CRUD Role
+### Yêu cầu 1: CRUD Role & User (Xóa mềm)
+
+**CRUD Role:**
 
 | Method | URL | Body | Mô tả |
 |--------|-----|------|-------|
@@ -66,7 +80,7 @@ Nhấn **Connect** → chọn database **`kt_db`** → xem collections `roles` v
 | PUT | `/roles/:id` | `{ "description": "Super Admin" }` | Cập nhật role |
 | DELETE | `/roles/:id` | — | Xóa mềm role |
 
-### CRUD User
+**CRUD User (getAll có query theo username includes):**
 
 | Method | URL | Body | Mô tả |
 |--------|-----|------|-------|
@@ -77,18 +91,23 @@ Nhấn **Connect** → chọn database **`kt_db`** → xem collections `roles` v
 | PUT | `/users/:id` | `{ "fullName": "John Updated" }` | Cập nhật user |
 | DELETE | `/users/:id` | — | Xóa mềm user |
 
-### Enable / Disable User
+### Yêu cầu 2: Enable User
 
 | Method | URL | Body | Mô tả |
 |--------|-----|------|-------|
-| POST | `/users/enable` | `{ "email": "john@test.com", "username": "john" }` | Kích hoạt user (status → true) |
-| POST | `/users/disable` | `{ "email": "john@test.com", "username": "john" }` | Vô hiệu hóa user (status → false) |
+| POST | `/users/enable` | `{ "email": "john@test.com", "username": "john" }` | Nếu đúng email + username → `status: true` |
 
-### Lấy Users theo Role
+### Yêu cầu 3: Disable User
+
+| Method | URL | Body | Mô tả |
+|--------|-----|------|-------|
+| POST | `/users/disable` | `{ "email": "john@test.com", "username": "john" }` | Nếu đúng email + username → `status: false` |
+
+### Yêu cầu 4: Lấy Users theo Role
 
 | Method | URL | Mô tả |
 |--------|-----|-------|
-| GET | `/roles/:id/users` | Lấy tất cả users thuộc role đó |
+| GET | `/roles/:id/users` | Lấy tất cả users có role = id |
 
 ---
 
@@ -117,6 +136,15 @@ KT/
 │   └── Roles.js         # Role schema
 ├── routes/
 │   └── index.js         # Tất cả API routes
+├── postman/
+│   ├── collections/     # Postman collection (KT API)
+│   │   └── KT API/
+│   │       ├── CRUD Role/
+│   │       ├── CRUD User/
+│   │       ├── Enable - Disable User/
+│   │       └── Users by Role/
+│   └── environments/    # Postman environment
+│       └── KT Local.yaml
 ├── app.js               # Express config
 ├── docker-compose.yml   # MongoDB container
 ├── package.json

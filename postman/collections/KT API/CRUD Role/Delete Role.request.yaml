@@ -1,0 +1,16 @@
+$kind: http-request
+name: Delete Role
+method: DELETE
+url: '{{baseUrl}}/roles/:id'
+order: 5000
+pathVariables:
+  - key: id
+    value: ''
+    description: Role ID
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code is 2xx", function () {
+          pm.response.to.be.success;
+      });

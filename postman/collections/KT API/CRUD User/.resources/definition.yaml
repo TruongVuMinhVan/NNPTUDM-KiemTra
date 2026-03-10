@@ -1,0 +1,3 @@
+$kind: collection
+name: CRUD User
+description: User management endpoints
